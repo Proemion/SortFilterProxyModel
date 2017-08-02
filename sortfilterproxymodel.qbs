@@ -31,7 +31,7 @@ Product
     }
 
     cpp.includePaths: [ "." ]
-    cpp.cppFlags: "-std=c++11"
+    cpp.cxxLanguageVersion: "c++11"
     
     Depends { name: "cpp" }
     Depends { name: "Qt"; submodules: product.qtModules }
