@@ -47,6 +47,7 @@ Product
             return defines
         }
 
+        cpp.linkerFlags: "--no-as-needed"
         cpp.includePaths: [ "." ]
 
         Depends { name: "cpp" }
