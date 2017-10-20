@@ -5,54 +5,42 @@ import qbs.FileInfo
 Product
 {
     name: "SortFilterProxyModel"
-    type: ["dynamiclibrary", "copied qbs resources"]
+    type:
+    [
+        "dynamiclibrary",
+        "copied qbs resources"
+    ]
     targetName: "sortfilterproxymodel"
 
-    destinationDirectory: project.deployDirectory + "/" + name
+    Depends { name: "Quarks" }
+    Depends { name: "cpp" }
+    Depends { name: "Qt.core" }
+    Depends { name: "Qt.qml" }
+    Depends { name: "Qt.gui" }
 
-    readonly property stringList qtModules:
-    [
-        "core",
-        "qml",
-        "gui"
-    ]
+    condition: Quarks.enabledQuarks.contains("sortfilterproxymodel")
+    destinationDirectory: Quarks.deployDirectory + "/" + name
 
     cpp.defines:
-    {
-        var defines = []
-        
-        defines.push('QT_NO_KEYWORDS')
-        defines.push('SORT_FILTER_PROXY_MODEL_LIBRARY_BUILD')
-
-        if (qbs.buildVariant === "release")
-        {
-            defines.push('QT_NO_DEBUG_OUTPUT=1')
-        }
-        
-        return defines
-    }
-
-    cpp.includePaths: [ "." ]
-    cpp.cxxLanguageVersion: "c++11"
-    
-    Depends { name: "cpp" }
-    Depends { name: "Qt"; submodules: product.qtModules }
+    [
+        'SORT_FILTER_PROXY_MODEL_LIBRARY_BUILD'
+    ]
+    cpp.includePaths:
+    [
+        "."
+    ]
 
     Export
     {
-        cpp.defines:
-        {
-            var defines = []
-            
-            defines.push('QT_NO_KEYWORDS')
-            
-            return defines
-        }
-
-        cpp.includePaths: [ "." ]
-
         Depends { name: "cpp" }
-        Depends { name: "Qt"; submodules: product.qtModules }
+        Depends { name: "Qt.core" }
+        Depends { name: "Qt.qml" }
+        Depends { name: "Qt.gui" }
+
+        cpp.includePaths:
+        [
+            "."
+        ]
     }
 
     Group
