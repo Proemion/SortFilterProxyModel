@@ -1,4 +1,4 @@
-import qbs 1.0
+import qbs
 import qbs.File
 import qbs.FileInfo
 
@@ -19,7 +19,6 @@ Product
     Depends { name: "Qt.gui" }
 
     condition: Quarks.enabledQuarks.contains("sortfilterproxymodel")
-    destinationDirectory: Quarks.deployDirectory + "/" + name
 
     cpp.defines:
     [
@@ -76,39 +75,14 @@ Product
             "qmldir"
         ]
         fileTags: "qbs resources"
+        qbs.install: true
+        qbs.installDir: product.name
     }
 
-    //FIXME: Replace this to actually install files in the right location
-    Rule
+    Group
     {
-        inputs:
-        [
-            "qbs resources"
-        ]
-
-        Artifact
-        {
-            filePath: FileInfo.joinPaths(product.destinationDirectory,
-                                         "qmldir")
-            fileTags:
-            [
-                "copied qbs resources"
-            ]
-        }
-
-        prepare:
-        {
-            var cmd = new JavaScriptCommand()
-
-            cmd.description = "Copying " + input.fileName + " to " + output.filePath
-            cmd.highlight = "codegen"
-            cmd.sourceCode = function()
-            {
-                File.copy(input.filePath,
-                          output.filePath)
-            }
-
-            return cmd
-        }
+        fileTagsFilter: "dynamiclibrary"
+        qbs.install: true
+        qbs.installDir: product.name
     }
 }
