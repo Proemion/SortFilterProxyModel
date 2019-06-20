@@ -7,10 +7,14 @@ import SortFilterProxyModel.Test 0.2
 Item {
     ListModel {
         id: listModel
-        ListElement { test: "first" }
-        ListElement { test: "second" }
-        ListElement { test: "third" }
-        ListElement { test: "fourth" }
+        ListElement { test: "first"; test2: "c" }
+        ListElement { test: "second"; test2: "a" }
+        ListElement { test: "third"; test2: "b" }
+        ListElement { test: "fourth"; test2: "b" }
+    }
+
+    ListModel {
+        id: noRolesFirstListModel
     }
 
     property list<QtObject> sorters: [
@@ -60,12 +64,25 @@ Item {
             property var expectedValues: ["first", "second", "third", "fourth"]
         }
     ]
+
     ReverseIndexSorter {
         id: reverseIndexSorter
     }
+
+    property list<RoleSorter> tieSorters: [
+        RoleSorter { roleName: "test2" },
+        RoleSorter { roleName: "test" }
+    ]
+
     SortFilterProxyModel {
         id: testModel
         sourceModel: listModel
+    }
+
+    SortFilterProxyModel {
+        id: noRolesFirstProxyModel
+        sourceModel: noRolesFirstListModel
+        sorters: RoleSorter { roleName: "test" }
     }
 
     TestCase {
@@ -100,12 +117,24 @@ Item {
             verifyModelValues(testModel, expectedValuesAfterDisabling);
         }
 
+        function test_tieSorters() {
+            testModel.sorters = tieSorters;
+            var expectedValues = ["second", "fourth", "third", "first"];
+            verifyModelValues(testModel, expectedValues);
+        }
+
+        function test_noRolesFirstModel() {
+            noRolesFirstListModel.append([{test: "b"}, {test: "a"}]);
+            var expectedValues = ["a", "b"];
+            verifyModelValues(noRolesFirstProxyModel, expectedValues);
+        }
+
         function verifyModelValues(model, expectedValues) {
             verify(model.count === expectedValues.length,
                    "Expected count " + expectedValues.length + ", actual count: " + model.count);
             for (var i = 0; i < model.count; i++)
             {
-                var modelValue = model.data(model.index(i, 0));
+                var modelValue = model.get(i, "test");
                 verify(modelValue === expectedValues[i],
                        "Expected testModel value " + expectedValues[i] + ", actual: " + modelValue);
             }
