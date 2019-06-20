@@ -3,17 +3,18 @@
 
 #include <QSortFilterProxyModel>
 #include <QQmlParserStatus>
+#include "qqmlsortfilterproxymodelexport.h"
 #include "filters/filtercontainer.h"
 #include "sorters/sortercontainer.h"
 #include "proxyroles/proxyrolecontainer.h"
 
 namespace qqsfpm {
 
-class QQmlSortFilterProxyModel : public QSortFilterProxyModel,
-                                 public QQmlParserStatus,
-                                 public FilterContainer,
-                                 public SorterContainer,
-                                 public ProxyRoleContainer
+class QQMLSORTFILTERPROXYMODEL_EXPORT QQmlSortFilterProxyModel : public QSortFilterProxyModel,
+                                                                 public QQmlParserStatus,
+                                                                 public FilterContainer,
+                                                                 public SorterContainer,
+                                                                 public ProxyRoleContainer
 {
     Q_OBJECT
     Q_INTERFACES(QQmlParserStatus)
