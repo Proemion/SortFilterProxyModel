@@ -1,3 +1,5 @@
+#ifndef SORT_FILTER_PROXY_MODEL_LIBRARY_BUILD
+
 #include "proxyrole.h"
 #include "joinrole.h"
 #include "switchrole.h"
@@ -21,3 +23,5 @@ void registerProxyRoleTypes() {
 Q_COREAPP_STARTUP_FUNCTION(registerProxyRoleTypes)
 
 }
+
+#endif

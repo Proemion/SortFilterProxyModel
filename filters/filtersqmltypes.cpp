@@ -1,3 +1,5 @@
+#ifndef SORT_FILTER_PROXY_MODEL_LIBRARY_BUILD
+
 #include "filter.h"
 #include "valuefilter.h"
 #include "indexfilter.h"
@@ -25,3 +27,5 @@ void registerFiltersTypes() {
 Q_COREAPP_STARTUP_FUNCTION(registerFiltersTypes)
 
 }
+
+#endif

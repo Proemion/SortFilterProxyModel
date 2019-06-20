@@ -1,3 +1,5 @@
+#ifndef SORT_FILTER_PROXY_MODEL_LIBRARY_BUILD
+
 #include "sorter.h"
 #include "rolesorter.h"
 #include "stringsorter.h"
@@ -19,3 +21,5 @@ void registerSorterTypes() {
 Q_COREAPP_STARTUP_FUNCTION(registerSorterTypes)
 
 }
+
+#endif

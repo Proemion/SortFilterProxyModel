@@ -505,10 +505,12 @@ void QQmlSortFilterProxyModel::onProxyRolesCleared()
     endResetModel();
 }
 
+#ifndef SORT_FILTER_PROXY_MODEL_LIBRARY_BUILD
 void registerQQmlSortFilterProxyModelTypes() {
     qmlRegisterType<QQmlSortFilterProxyModel>("SortFilterProxyModel", 0, 2, "SortFilterProxyModel");
 }
 
 Q_COREAPP_STARTUP_FUNCTION(registerQQmlSortFilterProxyModelTypes)
+#endif
 
 }
